@@ -5,9 +5,15 @@ import Combine
 extension String: Message {
 }
 
+enum NodeMessage: Message {
+    case foo
+    case bar
+}
+
 class Node : MessageStreamable {
-    var output = PassthroughSubject<Message, Never>()
-    var input = PassthroughSubject<Message, Never>()
+    
+    var output = PassthroughSubject<NodeMessage, Never>()
+    var input = PassthroughSubject<NodeMessage, Never>()
     let name: String
     var children: [Node]
     var subscribers = Set<AnyCancellable>()
@@ -32,5 +38,9 @@ class Node : MessageStreamable {
     }
 }
 
+
 final class MessageStreamTests: XCTestCase {
+    func testFoo() {
+        print("hoge")
+    }
 }
