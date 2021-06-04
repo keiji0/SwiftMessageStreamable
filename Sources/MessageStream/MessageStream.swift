@@ -42,8 +42,8 @@ public class MessageSubject<MessageType: Message>: MessagePublisher<MessageType>
 
 /// メッセージを送信することができるプロトコル
 public protocol MessageOutputable {
-    associatedtype Publisher : Combine.Publisher where Publisher.Output : Message, Publisher.Failure == Never
-    var output: Publisher { get }
+    associatedtype Subject : Combine.Subject where Subject.Output : Message, Subject.Failure == Never
+    var output: Subject { get }
 }
 
 /// メッセージを受け取ることができるプロトコル
@@ -54,4 +54,18 @@ public protocol MessageInputable {
 
 /// メッセージの送受信ができるプロトコル
 public protocol MessageStreamable: MessageInputable, MessageOutputable {
+}
+
+extension MessageStreamable {
+    
+    /// Streamを繋ぐ
+    /// - Parameters:
+    ///   - target: 対象のStream
+    ///   - cancellers: キャンセル一覧
+    func joint<Stream: MessageStreamable>(target: Stream, in cancellers: inout Set<AnyCancellable>)
+    where Subject.Output == Stream.Subject.Output
+    {
+        input.subscribe(target.input).store(in: &cancellers)
+        target.output.subscribe(output).store(in: &cancellers)
+    }
 }
