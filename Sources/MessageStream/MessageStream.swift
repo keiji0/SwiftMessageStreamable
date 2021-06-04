@@ -62,7 +62,7 @@ extension MessageStreamable {
     /// - Parameters:
     ///   - target: 対象のStream
     ///   - cancellers: キャンセル一覧
-    func joint<Stream: MessageStreamable>(target: Stream, in cancellers: inout Set<AnyCancellable>)
+    func joint<Stream: MessageStreamable>(target: Stream, storeIn cancellers: inout Set<AnyCancellable>)
     where Subject.Output == Stream.Subject.Output
     {
         input.subscribe(target.input).store(in: &cancellers)

@@ -43,8 +43,13 @@ class Node : MessageStreamable {
 
 final class MessageStreamTests: XCTestCase {
     func testFoo() {
-//        let root = Node("root")
-//        let child1 = Node("chid1")
+        let root = Node("root")
+        let child1 = Node("chid1")
+        
+        
+        var foo = Set<AnyCancellable>()
+        root.joint(target: child1, storeIn: &foo)
+        
 //        let child2 = Node("chid2")
 //
 //        var subscribers = Set<AnyCancellable>()
