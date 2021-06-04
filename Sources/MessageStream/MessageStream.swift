@@ -22,6 +22,8 @@ public class MessagePublisher: Publisher {
     public func receive<S>(subscriber: S) where S : Subscriber, Never == S.Failure, Message == S.Input {
         subject.receive(subscriber: subscriber)
     }
+    
+    public init() {}
 }
 
 public class MessageSubject: MessagePublisher, Subject {
