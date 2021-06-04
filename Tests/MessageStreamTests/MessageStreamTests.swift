@@ -12,8 +12,8 @@ enum NodeMessage: Message {
 
 class Node : MessageStreamable {
 
-    var output = MessageSubject()
-    var input = MessageSubject()
+    var output = MessageSubject<NodeMessage>()
+    var input = MessageSubject<NodeMessage>()
     
     let name: String
     var children: [Node]
@@ -28,7 +28,7 @@ class Node : MessageStreamable {
             input.subscribe(child.input).store(in: &subscribers)
             // 子の出力を自身の出力とする
             child.output.subscribe(output).store(in: &subscribers)
-            
+
             //child.output.sink{
             //    print($0)
             //}.store(in: &subscribers)
@@ -43,11 +43,11 @@ class Node : MessageStreamable {
 
 final class MessageStreamTests: XCTestCase {
     func testFoo() {
-        let root = Node("root")
-        let child1 = Node("chid1")
-        let child2 = Node("chid2")
-        
-        var subscribers = Set<AnyCancellable>()
+//        let root = Node("root")
+//        let child1 = Node("chid1")
+//        let child2 = Node("chid2")
+//
+//        var subscribers = Set<AnyCancellable>()
         
 //        root.joint(child1, subscribers)
     }
