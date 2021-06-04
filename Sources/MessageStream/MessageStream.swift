@@ -56,7 +56,7 @@ public protocol MessageInputable {
 public protocol MessageStreamable: MessageInputable, MessageOutputable {
 }
 
-extension MessageStreamable {
+public extension MessageStreamable {
     
     /// Streamを繋ぐ
     /// - Parameters:
